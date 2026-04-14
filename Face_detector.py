@@ -4,17 +4,19 @@ cap = cv2.VideoCapture(0)
 
 face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-body_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_fullbody.xml")
 
+frame_count = 0;
 while True:
     _, frame = cap.read()
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    frame_count += 1;
 
     for (x, y, width, height) in faces:
-       cv2.rectangle(frame, (x, y), (x + width, y + height), (255, 0, 0), 3)
+       cv2.rectangle(frame, (x, y), (x + width, y + height), (255, 255, 0), 3)
+       if frame_count % 30 == 0:
+           print(f"Face at x={x}, y={y}, width={width}, height={height}")
 
     cv2.imshow("Camera", frame)
 
